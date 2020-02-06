@@ -70,9 +70,9 @@ func (d *Datastore) Query(q query.Query) (query.Results, error) {
 			case <-proc.Closing():
 			case qrb.Output <- query.Result{
 				Entry: query.Entry{
-					Key:        string(key),
-					Value:      value,
-					Size:       len(value),
+					Key:   string(key),
+					Value: value,
+					Size:  len(value),
 				},
 			}:
 			}
@@ -117,7 +117,7 @@ type entry struct {
 }
 
 type batch struct {
-	db *Datastore
+	db   *Datastore
 	ents []entry
 }
 
@@ -132,8 +132,8 @@ func (b *batch) Put(key datastore.Key, value []byte) error {
 
 func (b *batch) Delete(key datastore.Key) error {
 	b.ents = append(b.ents, entry{
-		key:   key.Bytes(),
-		del:   true,
+		key: key.Bytes(),
+		del: true,
 	})
 	return nil
 }
@@ -156,7 +156,7 @@ func (b *batch) Commit() error {
 
 func (d *Datastore) Batch() (datastore.Batch, error) {
 	return &batch{
-		db:   d,
+		db: d,
 	}, nil
 }
 

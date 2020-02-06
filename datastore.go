@@ -110,6 +110,67 @@ func (d *Datastore) Sync(prefix datastore.Key) error {
 	return d.db.Sync()
 }
 
+type entry struct {
+	key   []byte
+	value []byte
+	del   bool
+}
+
+type batch struct {
+	db *Datastore
+	ents []entry
+}
+
+func (b *batch) Put(key datastore.Key, value []byte) error {
+	b.ents = append(b.ents, entry{
+		key:   key.Bytes(),
+		value: value,
+		del:   false,
+	})
+	return nil
+}
+
+func (b *batch) Delete(key datastore.Key) error {
+	b.ents = append(b.ents, entry{
+		key:   key.Bytes(),
+		del:   true,
+	})
+	return nil
+}
+
+func (b *batch) Commit() error {
+	for _, ent := range b.ents {
+		if !ent.del {
+			if err := b.db.db.Put(ent.key, ent.value); err != nil {
+				return err
+			}
+		} else {
+			if err := b.db.db.Delete(ent.key); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func (d *Datastore) Batch() (datastore.Batch, error) {
+	return &batch{
+		db:   d,
+	}, nil
+}
+
+func (d *Datastore) Commit() error { // Batch
+	return nil
+}
+
+func (d *Datastore) CollectGarbage() error {
+	return d.db.Merge()
+}
+
 func (d *Datastore) Close() error {
 	return d.db.Sync()
 }
+
+var _ datastore.Batching = (*Datastore)(nil)
+var _ datastore.GCDatastore = (*Datastore)(nil)

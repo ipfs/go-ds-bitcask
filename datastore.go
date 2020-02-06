@@ -14,7 +14,7 @@ type Datastore struct {
 }
 
 func NewDatastore(path string) (*Datastore, error) {
-	db, err := bitcask.Open(path, bitcask.WithMaxKeySize(128), bitcask.WithMaxValueSize(1<<20))
+	db, err := bitcask.Open(path, bitcask.WithMaxKeySize(256), bitcask.WithMaxValueSize(1<<20))
 	if err != nil {
 		return nil, err
 	}

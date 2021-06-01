@@ -1,6 +1,6 @@
 module github.com/ipfs/go-ds-bitcask
 
-go 1.13
+go 1.15
 
 require (
 	github.com/ipfs/go-datastore v0.3.1

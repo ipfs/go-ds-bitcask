@@ -5,5 +5,5 @@ go 1.15
 require (
 	github.com/ipfs/go-datastore v0.3.1
 	github.com/jbenet/goprocess v0.0.0-20160826012719-b497e2f366b8
-	github.com/prologic/bitcask v0.3.5
+	git.mills.io/prologic/bitcask v0.3.5
 )

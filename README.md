@@ -7,7 +7,7 @@
 [![GoDoc](https://godoc.org/github.com/ipfs/go-ds-bitcask?status.svg)](https://godoc.org/github.com/ipfs/go-ds-bitcask)
 [![Build Status](https://travis-ci.org/ipfs/go-ds-bitcask.svg?branch=master)](https://travis-ci.org/ipfs/go-ds-bitcask)
 
-> EXPERIMENTAL Datastore implementation using [bitcask](https://github.com/prologic/bitcask) as backend.
+> EXPERIMENTAL Datastore implementation using [bitcask](https://git.mills.io/prologic/bitcask) as backend.
 
 ## Lead Maintainer
 

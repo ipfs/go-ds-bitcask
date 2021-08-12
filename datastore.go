@@ -3,10 +3,10 @@ package bitcaskds
 import (
 	"errors"
 
+	"git.mills.io/prologic/bitcask"
 	"github.com/ipfs/go-datastore"
 	"github.com/ipfs/go-datastore/query"
 	"github.com/jbenet/goprocess"
-	"github.com/prologic/bitcask"
 )
 
 type Datastore struct {

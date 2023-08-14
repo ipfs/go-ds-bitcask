@@ -1,6 +1,6 @@
 module github.com/ipfs/go-ds-bitcask
 
-go 1.19
+go 1.20
 
 require (
 	git.mills.io/prologic/bitcask v1.0.0

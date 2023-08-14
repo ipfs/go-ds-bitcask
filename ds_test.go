@@ -1,7 +1,6 @@
 package bitcaskds
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -9,7 +8,7 @@ import (
 )
 
 func newDS(t *testing.T) (*Datastore, func()) {
-	path, err := ioutil.TempDir(os.TempDir(), "testing_bitcask_")
+	path, err := os.MkdirTemp(os.TempDir(), "testing_bitcask_")
 	if err != nil {
 		t.Fatal(err)
 	}

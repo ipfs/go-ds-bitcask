@@ -1,47 +1,18 @@
-# File managed by web3-bot. DO NOT EDIT.
-# See https://github.com/protocol/.github/ for details.
-
-on: [push, pull_request]
 name: Go Test
 
+on:
+  pull_request:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'push' && github.sha || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  unit:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ "ubuntu", "windows", "macos" ]
-        go: [ "1.15.x", "1.16.x" ]
-    runs-on: ${{ matrix.os }}-latest
-    name: ${{ matrix.os}} (go ${{ matrix.go }})
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go }}
-      - name: Go information
-        run: |
-          go version
-          go env
-      - name: Run tests
-        uses: protocol/multiple-go-modules@v1.0
-        with:
-          run: go test -v -coverprofile coverage.txt ./...
-      - name: Run tests (32 bit)
-        if: ${{ matrix.os != 'macos' }} # can't run 32 bit tests on OSX.
-        uses: protocol/multiple-go-modules@v1.0
-        env:
-          GOARCH: 386
-        with:
-          run: go test -v ./...
-      - name: Run tests with race detector
-        if: ${{ matrix.os == 'ubuntu' }} # speed things up. Windows and OSX VMs are slow
-        uses: protocol/multiple-go-modules@v1.0
-        with:
-          run: go test -v -race ./...
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@a1ed4b322b4b38cb846afb5a0ebfa17086917d27 # v1.5.0
-        with:
-          file: coverage.txt
-          env_vars: OS=${{ matrix.os }}, GO=${{ matrix.go }}
+  go-test:
+    uses: pl-strflt/uci/.github/workflows/go-test.yml@v0.0

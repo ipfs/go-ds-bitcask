@@ -2,7 +2,6 @@ module github.com/ipfs/go-ds-bitcask
 
 go 1.21
 
-
 require (
 	git.mills.io/prologic/bitcask v1.0.0
 	github.com/ipfs/go-datastore v0.3.1

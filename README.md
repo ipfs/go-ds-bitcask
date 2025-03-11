@@ -1,3 +1,5 @@
+> ## ⚠️ This repository his no longer supported.
+
 # go-ds-bitcask
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)

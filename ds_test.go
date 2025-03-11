@@ -1,31 +1,24 @@
 package bitcaskds
 
 import (
-	"os"
 	"testing"
 
 	dstest "github.com/ipfs/go-datastore/test"
 )
 
-func newDS(t *testing.T) (*Datastore, func()) {
-	path, err := os.MkdirTemp(os.TempDir(), "testing_bitcask_")
-	if err != nil {
-		t.Fatal(err)
-	}
+func newDS(t *testing.T) *Datastore {
+	tmpPath := t.TempDir()
 
-	d, err := NewDatastore(path)
+	d, err := NewDatastore(tmpPath)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return d, func() {
-		d.Close()
-		os.RemoveAll(path)
-	}
+	return d
 }
 
 func TestSuite(t *testing.T) {
-	d, done := newDS(t)
-	defer done()
+	d := newDS(t)
+	defer d.Close()
 
 	dstest.SubtestAll(t, d)
 }

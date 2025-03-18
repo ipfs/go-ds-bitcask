@@ -1,4 +1,4 @@
-> ## ⚠️ This repository his no longer supported.
+> ## ⚠️ This repository is no longer supported.
 
 # go-ds-bitcask
 
